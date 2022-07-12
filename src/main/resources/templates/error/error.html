@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="_fragments.html :: head(~{::title})">
+    <title>error</title>
+</head>
+
+<body>
+<!--导航-->
+<nav th:replace="_fragments.html :: menu(1)"></nav>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class=" m-container-small ">
+    <div class="ui error message">
+        <div class="ui center aligned container" style="color: floralwhite !important;">
+            <h1 style="color: red !important; font-weight: bold">error</h1>
+            <img src="../../static/images/404.png" alt="" width="300" th:src="@{/images/404.png}">
+            <h2 style="color: red !important; font-weight: bold">你访问的资源不存在</h2>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!--底部 footer -->
+<footer th:replace="_fragments.html :: footer"></footer>
+
+<th:block th:replace="_fragments.html :: script"></th:block>
+<!--&lt;!&ndash;底部 footer &ndash;&gt;-->
+<!--<footer th:replace="admin/_fragmentsAdmin :: footer"></footer>-->
+
+<!--<th:block th:replace="admin/_fragmentsAdmin :: script"></th:block>-->
+</body>
+</html>

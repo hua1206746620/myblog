@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="_fragments.html :: head(~{::title})">
+    <title>404</title>
+</head>
+
+<body>
+<!--导航-->
+<nav th:replace="_fragments.html :: menu(1)"></nav>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class=" m-container-small ">
+    <div class="ui error message">
+        <div class="ui center aligned container">
+            <h1 style="color: red !important; font-weight: bold">404</h1>
+            <img src="../../static/images/404.png" alt="" width="300" th:src="@{/images/404.png}">
+            <h2 style="color: red !important; font-weight: bold">你访问的资源不存在</h2>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!--底部 footer -->
+<footer th:replace="_fragments.html :: footer"></footer>
+
+<th:block th:replace="_fragments.html :: script"></th:block>
+</body>
+</html>

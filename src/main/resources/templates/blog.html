@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <title>博客</title>
+</head>
+<body>
+
+<!--导航-->
+<nav th:replace="_fragments :: menu(1)"></nav>
+<!--中间内容-->
+<div id="waypoint" class="m-container-small m-padded-tb-large animate__animated animate__fadeInRight">
+    <div class="ui  container">
+        <!--头部-->
+        <div class="ui top attached segment">
+
+            <div class="ui horizontal link list">
+                <div class="item">
+                    <img src="../static/images/头像.jpg" th:src="@{${blog.user.avatar}}" alt="" class="ui avatar image">
+                    <div class="content"><a href="" class="header" th:text="${blog.user.nickname}">花海</a></div>
+                </div>
+                <div class="item">
+                    <i class="calendar icon"></i> <span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020-07-01</span>
+                </div>
+                <div class="item">
+                    <i class="eye icon"></i> <span th:text="${blog.views}">10</span>
+                </div>
+            </div>
+        </div>
+        <!--图片-->
+        <div class="ui attached segment">
+            <img src="../static/images/JVM.png" th:src="@{${blog.firstPicture}}" alt="" class="ui fluid rounded image">
+        </div>
+        <!--内容-->
+        <div class="ui attached padded segment">
+            <!--转载还是原创-->
+            <div class="ui right aligned basic segment">
+                <div class="ui basic orange label" th:text="${blog.flag}">转载</div>
+            </div>
+            <!--标题-->
+            <h2 class="ui center aligned header" th:text="${blog.title}">JVM与Java体系结构</h2>
+            <!--文章内容-->
+            <div id="content" th:utext="${blog.content}"
+                 class="typo typo-selection m-padded-lr-responsive m-padded-tb js-toc-content">
+
+                <h1>中文网页重设与排版：<i class="serif">Typo.css</i></h1><br/>
+                <!--编程语言高亮-->
+                <pre><code class="language-java">
+  public int countQuadruplets(int[] nums) {
+        int count = 0;
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = i+1; j < n; j++) {
+                for (int k = j+1; k < n; k++) {
+                    for (int l = k+1; l < n; l++) {
+                        if (nums[i]+nums[j]+nums[k] == nums[l]) count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+                </code></pre>
+
+                <h1 id="section1">一、关于 <i class="serif">Typo.css</i></h1>
+
+                <p><i class="serif">Typo.css</i> 的目的是，在一致化浏览器排版效果的同时，构建最适合中文阅读的网页排版。</p>
+                <h2>现状和如何去做：</h2>
+
+                <p class="typo-first">排版是一个麻烦的问题 <sup><a href="#appendix1"># 附录一</a></sup>，需要精心设计，而这个设计却是常被视觉设计师所忽略的。前端工程师更常看到这样的问题，但不便变更。因为在多个
+                    OS 中的不同浏览器渲染不同，改动需要多的时间做回归测试，所以改变变得更困难。而像我们一般使用的
+                    Yahoo、Eric Meyer 和 Alice base.css 中采用的 Reset 都没有很好地考虑中文排版。<i class="serif">Typo.css</i>
+                    要做的就是解决中文排版的问题。</p>
+
+                <p><strong><i class="serif">Typo.css</i> 测试于如下平台：</strong></p>
+                <table summary="Typo.css 的测试平台列表">
+                    <thead>
+                    <tr>
+                        <th>OS/浏览器</th>
+                        <th>Firefox</th>
+                        <th>Chrome</th>
+                        <th>Safari</th>
+                        <th>Opera</th>
+                        <th>IE9</th>
+                        <th>IE8</th>
+                        <th>IE7</th>
+                        <th>IE6</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>OS X</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Win 7</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Win XP</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>-</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                    </tr>
+                    <tr>
+                        <td>Ubuntu</td>
+                        <td>✔</td>
+                        <td>✔</td>
+                        <td>-</td>
+                        <td>✔</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h4>中文排版的重点和难点</h4>
+
+                <p>在中文排版中，HTML4 的很多标准在语义在都有照顾到。但从视觉效果上，却很难利用单独的 CSS 来实现，像<abbr title="在文字下多加一个点">着重号</abbr>（例：这里<em
+                        class="typo-em">强调一下</em>）。在 HTML4 中，专名号标签（<code>&lt;u&gt;</code>）已经被放弃，而
+                    HTML5 被<a href="//html5doctor.com/u-element/">重新提起</a>。<i class="serif">Typo.css</i>
+                    也根据实际情况提供相应的方案。我们重要要注意的两点是：</p>
+                <ol>
+                    <li>语义：语义对应的用法和样式是否与中文排版一致</li>
+                    <li>表现：在各浏览器中的字体、大小和缩放是否如排版预期</li>
+                </ol>
+                <p>对于这些，<i class="serif">Typo.css</i> 排版项目的中文偏重注意点，都添加在附录中，详见：</p>
+                <blockquote>
+                    <b>附录一</b>：<a href="#appendix1"><i class="serif">Typo.css</i> 排版偏重点</a>
+                </blockquote>
+
+                <p>目前已有像百姓网等全面使用 <i class="serif">Typo.css</i> 的项目，测试平台的覆盖，特别是在<abbr title="手机、平板电脑等移动平台">移动端</abbr>上还没有覆盖完主流平台，希望有能力的同学能加入测试行列，或者加入到
+                    <i class="serif">Typo.css</i>
+                    的开发。加入方法：<a href="https://github.com/sofish/Typo.css">参与 <i class="serif">Typo.css</i> 开发</a>。如有批评、建议和意见，也随时欢迎给在
+                    Github 直接提 <a
+                            href="https://github.com/sofish/Typo.css/issues">issues</a>，或给<abbr
+                            title="Sofish Lin, author of Typo.css"
+                            role="author">我</abbr>发<a
+                            href="mailto:sofish@icloud.com">邮件</a>。</p>
+
+
+                <h2 id="section2">二、排版实例：</h2>
+
+                <p>提供2个排版实例，第一个中文实例来自于来自于<cite class="typo-unique">张燕婴</cite>的《论语》，由于古文排版涉及到的元素比较多，所以采用《论语》中《学而》的第一篇作为排版实例介绍；第2个来自到经典的
+                    Lorem Ipsum，并加入了一些代码和列表等比较具有代表性的排版元素。</p>
+
+                <h3 id="section2-1">例1：论语学而篇第一</h3>
+
+                <p>
+                    <small><b>作者：</b><abbr title="名丘，字仲尼">孔子</abbr>（
+                        <time>前551年9月28日－前479年4月11日</time>
+                        ）
+                    </small>
+                </p>
+
+            </div>
+            <!--标签-->
+            <div class="m-padded-lr-responsive m-padded-tb">
+                <div class="ui basic teal left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">JVM
+                </div>
+            </div>
+            <!--打赏-->
+            <div class="ui center aligned basic segment">
+                <div id="payButton" class="ui orange basic circular button">联系我</div>
+            </div>
+            <!--点击弹出图片-->
+            <div class="ui  payQR flowing popup transition hidden">
+                <div class="ui orange basic label">
+                    <div class="ui images" style="font-size: inherit !important;">
+                        <div class="image">
+                            <img src="../static/images/二维码.png" th:src="@{/images/二维码.png}" alt=""
+                                 class="ui rounded bordered image"
+                                 style="width: 120px;">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">Wechat</div>
+                </div>
+            </div>
+        </div>
+        <!--博客信息-->
+        <div class="ui attached positive message">
+            <div class="ui middle aligned grid">
+                <div class="eleven wide column">
+                    <ui class="list">
+                        <li>作者：<span th:text="${blog.user.nickname}">花海</span></li>
+                        <li>发表时间：<span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm')}">2022-07-02</span>
+                        </li>
+                        <li>版权声明：自由转载-非商用</li>
+                        <li>公众号转载：自由转载-非商用</li>
+                    </ui>
+                </div>
+                <div class="five wide column">
+                    <img src="../static/images/二维码.png" th:src="@{/images/二维码.png}" alt=""
+                         class="ui right floated rounded bordered image"
+                         style="width: 100px;">
+                </div>
+
+            </div>
+        </div>
+
+
+        <!--留言区域-->
+        <div  class="ui bottom attached segment" th:if="${blog.commentabled}">
+            <!--留言区域列表-->
+            <div id="comment-container"  class="ui teal segment">
+                <div th:fragment="commentList">
+                    <div class="ui threaded comments" style="max-width: 100%;">
+                        <h3 class="ui dividing header">评论</h3>
+                        <div class="comment" th:each="comment : ${comments}">
+                            <a class="avatar">
+                                <img src="https://unsplash.it/100/100?image=1005" th:src="@{${comment.avatar}}">
+                            </a>
+                            <div class="content">
+                                <a class="author" >
+                                    <span th:text="${comment.nickname}">Matt</span>
+                                    <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${comment.adminComment}">博主</div>
+                                </a>
+                                <div class="metadata">
+                                    <span class="date" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
+                                </div>
+                                <div class="text" th:text="${comment.content}">
+                                    How artistic!
+                                </div>
+                                <div class="actions">
+                                    <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
+                                </div>
+                            </div>
+                            <div class="comments" th:if="${#arrays.length(comment.replyComments)}>0">
+                                <div class="comment" th:each="reply : ${comment.replyComments}">
+                                    <a class="avatar">
+                                        <img src="https://unsplash.it/100/100?image=1005" th:src="@{${reply.avatar}}">
+                                    </a>
+                                    <div class="content">
+                                        <a class="author" >
+                                            <span th:text="${reply.nickname}">Matt</span>
+                                            <span th:text="|@${reply.parentNickname}|" class="m-blue">@</span>
+                                            <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${reply.adminComment}">博主</div>
+                                        </a>
+                                        <div class="metadata">
+                                            <span class="date" th:text="${#dates.format(reply.createTime,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
+                                        </div>
+                                        <div class="text" th:text="${reply.content}">
+                                            How artistic!
+                                        </div>
+                                        <div class="actions">
+                                            <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.id},data-commentnickname=${reply.nickname}" onclick="reply(this)">回复</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--提交留言表单-->
+            <div id="comment-form" class="ui form">
+                <input type="hidden" name="blog.id" th:value="${blog.id}">
+                <input type="hidden" name="parentComment.id" value="-1">
+                <div class="field">
+                    <textarea name="content" placeholder="请输入评论信息..."></textarea>
+                </div>
+                <div class="fields">
+                    <div class="field m-mobile-wide m-margin-bottom-small">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="nickname" placeholder="姓名" th:value="${session.user}!=null ? ${session.user.nickname}">
+                        </div>
+                    </div>
+                    <div class="field m-mobile-wide m-margin-bottom-small">
+                        <div class="ui left icon input">
+                            <i class="mail icon"></i>
+                            <input type="text" name="email" placeholder="邮箱" th:value="${session.user}!=null ? ${session.user.email}">
+                        </div>
+                    </div>
+                    <div class="field  m-margin-bottom-small m-mobile-wide">
+                        <button id="commentpost-btn" type="button" class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--右下角的小目录-->
+<div id="toolbar" class="m-fixed m-right-bottom m-padded" style="display:none;">
+    <div class="ui vertical icon buttons">
+        <button id="toTop-button" class="ui blue button"><i class="chevron up icon"></i></button>
+        <button class="ui toc blue button">目录</button>
+        <a href="#comment-container" class="ui blue button">留言</a>
+        <button id="wechatButton" class="ui blue icon button"><i class="weixin icon"></i></button>
+        <button id="toDown-button" class="ui blue button"><i class="chevron down icon"></i></button>
+    </div>
+</div>
+<!--目录内容-->
+<div class="ui toc-container flowing popup transition hidden" style="width: 250px !important;">
+    <ol class="js-toc"></ol>
+</div>
+<div id="qrcode" class="ui weChatQR flowing popup transition hidden" style="width: 150px !important;">
+    <!--<img src="./static/images/二维码.png" alt="" class="ui rounded bordered image" style="width: 140px;">-->
+</div>
+
+<br>
+<br>
+<!--底部 footer -->
+<footer th:replace="_fragments :: footer"></footer>
+<!--js引入-->
+<th:block th:replace="_fragments :: script"></th:block>
+
+
+<script th:inline="javascript">
+    /*移动端上方栏的隐藏*/
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    /*支付码的隐藏*/
+    $('#payButton').popup({
+        popup: $('.payQR.popup'),
+        on: 'click',
+        position: 'bottom center'
+    });
+    $('.toc.button').popup({
+        popup: $('.toc-container.popup'),
+        on: 'click',
+        position: 'left center'
+    });
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.js-toc-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+    /*目录的wechat*/
+    $('#wechatButton').popup({
+        popup: $('.weChatQR.popup'),
+        on: 'click',
+        position: 'left center'
+    });
+
+    var serurl = /*[[#{blog.serurl}]]*/"127.0.0.1:8080";
+    var url = /*[[@{/blog/{id}(id=${blog.id})}]]*/"";
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: serurl + url,
+        width: 120,
+        height: 120,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    /*页面滑动的速度大小*/
+    $('#toTop-button').click(function () {
+        $(window).scrollTo(0, 500);
+    });
+    $('#toDown-button').click(function () {
+        $(window).scrollTo(document.body.scrollHeight, 500);
+    });
+
+    var waypoint = new Waypoint({
+        element: document.getElementById('waypoint'),
+        handler: function (direction) {
+            if (direction == 'down') {
+                $('#toolbar').show(100);
+            } else {
+                $('#toolbar').hide(500);
+            }
+        }
+    });
+
+    //评论表单验证
+    $('.ui.form').form({
+        fields: {
+            title: {
+                identifier: 'content',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入评论内容'
+                }
+                ]
+            },
+            content: {
+                identifier: 'nickname',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入你的大名'
+                }]
+            },
+            type: {
+                identifier: 'email',
+                rules: [{
+                    type: 'email',
+                    prompt: '请填写正确的邮箱地址'
+                }]
+            }
+        }
+    });
+
+    // 跳转页面
+    $(function () {
+        $("#comment-container").load(/*[[@{/comments/{id}(id=${blog.id})}]]*/"comments/6");
+    });
+
+    //校验
+    $('#commentpost-btn').click(function () {
+        var boo = $('.ui.form').form('validate form');
+        if (boo) {
+            console.log('校验成功');
+            postData();
+        } else {
+            console.log('校验失败');
+        }
+    });
+    // 评论区提交
+    function postData() {
+        $("#comment-container").load(/*[[@{/comments}]]*/"", {
+            "parentComment.id": $("[name='parentComment.id']").val(),
+            "blog.id": $("[name='blog.id']").val(),
+            "nickname": $("[name='nickname']").val(),
+            "email": $("[name='email']").val(),
+            "content": $("[name='content']").val()
+        }, function (responseTxt, statusTxt, xhr) {
+//        $(window).scrollTo($('#comment-container'),500);
+            clearContent();
+        });
+    }
+    function clearContent() {
+        $("[name='content']").val('');
+        $("[name='parentComment.id']").val(-1);
+        $("[name='content']").attr("placeholder", "请输入评论信息...");
+    }
+
+    function reply(obj) {
+        var commentId = $(obj).data('commentid');
+        var commentNickname = $(obj).data('commentnickname');
+        $("[name='content']").attr("placeholder", "@" + commentNickname).focus();
+        $("[name='parentComment.id']").val(commentId);
+        $(window).scrollTo($('#comment-form'), 500);
+    }
+
+</script>
+</body>
+</html>

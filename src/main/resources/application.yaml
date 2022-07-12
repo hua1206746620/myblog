@@ -1,0 +1,38 @@
+server:
+  port: 8081
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/myblog?rewriteBatchedStatements=true&useSSL=false
+    username: root
+    password: hua
+  jackson:
+    default-property-inclusion: non_null # JSON处理时忽略非空字段
+#  mvc:
+#    static-path-pattern: /static/**
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.myblog.myblog.entity
+
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#用于打印sql语句
+
+#mybatis-plus:
+#  type-aliases-package: com.myblog.myblog.entity # 别名扫描包
+logging:
+  level:
+    com.hmdp: debug
+  file:
+    name: log/blog-dev.log
+
+pagehelper:                #分页插件
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params:
+
+comment.avatar: /images/游客头像.jpg

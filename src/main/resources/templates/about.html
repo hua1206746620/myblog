@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <title>关于我</title>
+</head>
+<body class="aboutme-bg">
+<!--导航-->
+<nav th:replace="_fragments :: menu(5)"></nav>
+<!--中间内容-->
+<div class="m-container-small m-padded-tb-large">
+    <br>
+    <br>
+    <br>
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <!--图片-->
+            <div class="eight wide column">
+                <img src="../static/images/头像.jpg" th:src="@{/images/头像.jpg}" alt="" class="ui rounded image">
+            </div>
+            <!--关于我-->
+            <div class="eight wide column">
+                <div class="ui top attached segment">
+                    <div class="ui header">关于我———花海s</div>
+                </div>
+                <div class="ui attached segment">
+                    <p class="m-text">一起学习，一起进步！</p>
+                    <p class="m-text">热爱运动，一起成长！</p>
+                    <p class="m-text">不许偷懒！</p>
+                </div>
+                <div class="ui attached segment">
+                    <div class="ui labels">
+                        <div class="ui purple left pointing basic label">编程</div>
+                        <div class="ui purple left pointing basic label">LeetCode</div>
+                        <div class="ui purple left pointing basic label">学习中...</div>
+                    </div>
+                </div>
+                <div class="ui attached segment">
+                    <div class="ui labels">
+                        <div class="ui teal left pointing basic label ">Java</div>
+                        <div class="ui teal left pointing basic label ">JavaWeb</div>
+                        <div class="ui teal left pointing basic label ">Spring</div>
+                        <div class="ui teal left pointing basic label ">MyBatis</div>
+                        <div class="ui teal left pointing basic label ">LeetCode</div>
+                    </div>
+                </div>
+                <div class="ui bottom attached segment">
+                    <div class="ui git circular icon button" data-content="hua1206746620"><i class="github icon"></i></div>
+                    <div id="wechatButton" class="ui circular icon button"><i class="weixin icon"></i></div>
+                    <!--<a href="" class="ui circular icon button" id="wechatButton"><i class="weixin icon"></i></a>-->
+                    <div id="QQButton" class="ui circular icon button"><i class="qq icon"></i></div>
+                    <!--<div class="ui qq circular icon button" data-content="1206746620"><i class="qq icon"></i></div>-->
+                </div>
+                <!--弹出微信二维码图片-->
+                <div class="ui  payQR flowing popup transition hidden">
+                    <div class="ui orange basic label">
+                        <div class="ui images" style="font-size: inherit !important;">
+                            <div class="image">
+                                <img src="../static/images/二维码.png" th:src="@{/images/二维码.png}" alt="" class="ui rounded bordered image" style="width: 120px;">
+                            </div>
+                        </div>
+                        <div style="text-align: center;">Wechat</div>
+                    </div>
+                </div>
+                <div class="ui  qqQR flowing popup transition hidden">
+                    <div class="ui purple basic label">
+                        <div class="ui images" style="font-size: inherit !important;">
+                            <div class="image">
+                                <img src="../static/images/qq二维码.jpg" th:src="@{/images/qq二维码.jpg}" alt="" class="ui rounded bordered image" style="width: 120px;">
+                            </div>
+                        </div>
+                        <div style="text-align: center;">QQ</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+</div>
+<!--底部 footer -->
+<footer th:replace="_fragments :: footer"></footer>
+<!--js引入-->
+<th:block th:replace="_fragments :: script"></th:block>
+
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.git').popup();
+    $('#wechatButton').popup({
+        popup:$('.payQR.popup'),
+        on:'click',
+        position:'bottom center'
+    });
+    $('#QQButton').popup({
+        popup:$('.qqQR.popup'),
+        on:'click',
+        position:'bottom center'
+    });
+</script>
+
+</body>
+</html>

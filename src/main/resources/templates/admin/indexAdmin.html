@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_fragmentsAdmin :: headAdmin(~{::title})">
+    <title>管理首页</title>
+</head>
+<body>
+<!--导航-->
+<nav th:replace="admin/_fragmentsAdmin :: firstMenu(1)"></nav>
+<!--二级导航-->
+<nav class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/admin/blogs/input}" class=" item">博客发布</a>
+            <a href="#" th:href="@{/admin/blogs}" class="blue active item">博客列表</a>
+        </div>
+    </div>
+</nav>
+
+<!--中间内容-->
+<div class="m-container-small m-padded-tb-large">
+    <div class="ui  container">
+        <div class="ui success large message">
+            <h3>Hi</h3>
+            <p>花海，欢迎登录！</p>
+        </div>
+    </div>
+    <img src="../../static/images/头像.jpg" th:src="@{/images/头像.jpg}"
+         alt="" class="ui rounded bordered fluid image">
+</div>
+<br>
+<br>
+<br>
+<!--底部 footer -->
+<footer th:replace="admin/_fragmentsAdmin :: footer"></footer>
+
+<th:block th:replace="admin/_fragmentsAdmin :: script"></th:block>
+<!--移动端上方栏的隐藏-->
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+</script>
+<!--打赏支付码的隐藏-->
+<script>
+    $('#payButton').popup({
+        popup: $('.payQR.popup'),
+        on: 'click',
+        position: 'bottom center'
+    });
+</script>
+<script>
+    $('.ui.dropdown')
+        .dropdown()
+    ;
+</script>
+
+</body>
+</html>
